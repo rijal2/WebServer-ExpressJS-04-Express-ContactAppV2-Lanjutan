@@ -61,6 +61,14 @@ app.get('/contact', (req, res) => {
     })
 })
 
+//Halaman Form Tambah data kontak
+app.get('/contact/add', (req, res) => {
+    res.render('add-contact', {
+        title: "Form Tambah Data Contact",
+        layout: "layouts/main-layout"
+    })
+})
+
 //Setting halaman Detail Contact
 app.get('/contact/:nama', (req, res) => {
     // res.sendFile('./contact.html', {root: __dirname})
