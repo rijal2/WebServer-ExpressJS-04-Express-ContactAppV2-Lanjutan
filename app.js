@@ -1,5 +1,7 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
 const { loadContact, findContact } = require('./utils/contacts')
 const app = express()
 const port = 3000
@@ -10,6 +12,9 @@ app.use(expressLayouts);
 
 //Menggunakan middleware express.static
 app.use(express.static('public'))
+
+//Menggunakan middleware express.urlencoded()
+app.use(express.urlencoded())
 
 
 //Setting halaman root (home)
@@ -67,6 +72,11 @@ app.get('/contact/add', (req, res) => {
         title: "Form Tambah Data Contact",
         layout: "layouts/main-layout"
     })
+})
+
+//Proses penyimpanan data
+app.post('/contact', (req, res) => {
+    res.send(req.body)
 })
 
 //Setting halaman Detail Contact
