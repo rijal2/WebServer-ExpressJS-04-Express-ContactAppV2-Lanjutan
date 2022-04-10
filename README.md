@@ -46,15 +46,23 @@ PEMBUATAN ROUT
     })
 
     Yang Kedua, saat rout diatas sudah dijalankan maka tulisan "data berhasil dikirim" akan dimunculkan dilayar. Yang artinya bahwa data tersebut sudah berhasil dikirim ke sistem.
-    Seharusnya data yang dikirim tersebut bisa dilihat diterminal, karena pada rout ada perintah console.log(req.body) yang akan mencetak data yang ditangkap oleh body ke terminal. Namun saat dicek ternyata data tersebut statusnya undifined. Hal ini terjadi karena data yang dikirim harus diparsing dulu menggunakan builtin-middleware express.urlencoded(). Oleh karena itu segera impor middleware tersebut, dan refresh halaman browsernya.
+    Seharusnya data yang dikirim tersebut bisa dilihat diterminal, karena pada rout ada perintah console.log(req.body) yang akan mencetak data yang ditangkap oleh body ke terminal. Namun faktanya saat dicek diterminal ternyata data tersebut statusnya undifined. Hal ini terjadi karena data yang dikirim harus diparsing dulu menggunakan builtin-middleware express.urlencoded(). Oleh karena itu segera impor middleware tersebut, dan refresh halaman browsernya.
 
         app.use(express.urlencoded())
     
-    Kemudian cek pada terminal, maka akan muncul data yang telah dikirim. Selain dicetak pada console.log(), data tersebut juga bisa langsung dikirim ke halaman browser. Sehingga rout akan berubah seperti ini:
+    Kemudian cek pada terminal, maka akan muncul data2 yang telah dikirim. Selain dicetak pada console.log(), data tersebut juga bisa langsung dikirim ke halaman browser dengan menggunakan metode re.send(). Sehingga rout akan berubah seperti ini:
 
         app.post('/contact', (req, res) => {
             res.send(req.body)
         })
+
+05. Langkah-langkah diatas sebenarnya adalah uji coba untuk melihat apakah benar data yang dimasukkan user ditangkap oleh req.body, Selain itu juga menjadi jalan untuk menghindari status hang yang dialami oleh terminal atau loading terus menerus oleh browser akibat sistem tidak tahu harus direspon dengan apakah sebuah request dg url /contact yang metode nya post. Setelah tahu dengan pasti dimana data yang diinput user disimpan maka langkah selanjutnya adalah membuat skenario proses data.
+
+06. Sebelumnya hapus terlebih dahulu metode res.send() yang ada didalam app.post('/contact', (req, res) => {}). Karena itu sudah tidak digunakan, dan akan diganti dengan function proses tambah data dan halaman browser yang tampil setelah data berhasil disimpan.
+
+07. Buat dulu function yang akan memproses penambahan data. Ada dua function yang akan dibuat yaitu saveContacts dan addContact. Keduanya dibuat pada file contact.js yang berada di folder utils
+
+08. 
 
 
 

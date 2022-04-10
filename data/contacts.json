@@ -1,4 +1,1 @@
-[
-    {"nama" : "Nama1", "nohp" : "No. HP1", "email" : "email1@gmail.com"},
-    {"nama" : "Nama2", "nohp" : "No. HP2", "email" : "email2@gmail.com"}
-]
+[{"nama":"Nama1","nohp":"No. HP1","email":"email1@gmail.com"},{"nama":"Nama2","nohp":"No. HP2","email":"email2@gmail.com"},{"nama":"Nama3","email":"email3@gmail.com","nohp":"No HP3"}]
