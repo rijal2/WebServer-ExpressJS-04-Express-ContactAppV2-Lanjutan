@@ -62,7 +62,13 @@ PEMBUATAN ROUT
 
 07. Buat dulu function yang akan memproses penambahan data. Ada dua function yang akan dibuat yaitu saveContacts dan addContact. Keduanya dibuat pada file contact.js yang berada di folder utils
 
-08. 
+08. Function saveContacts berfungsi untuk menimpa isi dari contacts.json dengan data baru (data yang sudah ada penambahannya)
+
+09. Function addContact bertugas untuk menambahkan data user yang baru ke contacts.json
+
+10. Jangan lupa export functioan addContact() dan import ke app.js
+
+11. Selesai
 
 
 
