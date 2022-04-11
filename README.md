@@ -74,7 +74,12 @@ PEMBUATAN ROUT
 
 PROSES VALIDASI
 01. Agar kolom isian disetting wajib diisi maka tambahkan atribut "required" pada html tag input.
-02. Untuk validasi email, bisa dengan mengubah atribut type menjadi email.
-03. 
+02. Untuk validasi email, bisa dengan mengubah value dari atribut 'type' menjadi email. Validasi ini hanya akan mengecek apakah data yang dimasukkan ada karrakter @ atau tidak.
 
+VALIDASI EMAIL
+01. Untuk validasi email tidak cukup dengan mengandalkan validasi bawaan browser. Express sudah memiliki validasi email yang bisa digunakan, yaitu express-validator. Silahkan kunjungi dokumentasi nya di:
+
+    https://www.npmjs.com/package/express-validator
+
+02. Install express-validator versi 6.10.1
 PROSES PENYIMPANAN
