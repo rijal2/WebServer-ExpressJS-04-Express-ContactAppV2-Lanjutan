@@ -80,7 +80,10 @@ app.get('/contact/add', (req, res) => {
 app.post('/contact', [
     body('nama').custom((value) => {
         const duplikat = cekDuplikat(value)
-
+        if(duplikat){
+            throw new Error('Nama yang diinput sudah ada. Silahkan gunakan nama lain!')
+        }
+        return true
     }),
     check('email', 'Email yang diinput tidak valid!').isEmail(),
     check('nohp', 'No HP yang diinput tidak valid!').isMobilePhone('id-ID')

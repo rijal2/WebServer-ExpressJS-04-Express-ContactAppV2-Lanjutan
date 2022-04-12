@@ -157,8 +157,23 @@ Tidak boleh ada nama yang sama, jadi jika ada data baru dengan nama yang sudah a
 02. isi parameter body dengan atribut yang ada pada elemen tempat user input data nama, yaitu atribut nama.
 03. Pada custom(value), value merujuk pada data nama yang akan dicek statusnya.
 04. Buat skema pengecekan nama double. terlebih dahulu buat function cekDuplikat() di file /utils/contacts.js
-05. 
+05. Jangan lupa untuk export dan import function tersebut.
+06. Kemudian gunakan function tersebut kedalam arrow functionnya body().custom((value) => {})
+07. Cek variabel duplikat, apakah ada nama yang sama atau tidak. Jika ada maka ini salah, sehingga harus dibuat lah error baru dengan throw new Error()
 
+    body('nama').custom((value) => {
+        const duplikat = cekDuplikat(value)
+        if(duplikat){
+            throw new Error('Nama yang diinput sudah ada. Silahkan gunakan nama lain!')
+        }
+    }),
 
+Selain itu tujuan membuat error baru adalah agar data yang dikirim masuk ke dalama validationResault. Jangan lupa apabila tidak ada duplikat, maka kembalikan dengan return true.
 
-
+    body('nama').custom((value) => {
+        const duplikat = cekDuplikat(value)
+        if(duplikat){
+            throw new Error('Nama yang diinput sudah ada. Silahkan gunakan nama lain!')
+        }
+        return true
+    }),
