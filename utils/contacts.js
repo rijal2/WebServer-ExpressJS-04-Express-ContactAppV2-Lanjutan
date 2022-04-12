@@ -39,4 +39,9 @@ const addContact = (contact) => {
     saveContacts(contacts)
 }
 
-module.exports = { loadContact, findContact, addContact }
+const cekDuplikat = (nama) => {
+    const cotacts = loadContact()
+    return cotacts.find((contact) => contact.nama === nama)
+}
+
+module.exports = { loadContact, findContact, addContact, cekDuplikat }

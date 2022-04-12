@@ -2,7 +2,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const req = require('express/lib/request');
 const res = require('express/lib/response');
-const { loadContact, findContact, addContact } = require('./utils/contacts');
+const { loadContact, findContact, addContact, cekDuplikat } = require('./utils/contacts');
 const { body, validationResult, check } = require('express-validator');
 
 const app = express()
@@ -78,6 +78,10 @@ app.get('/contact/add', (req, res) => {
 
 //Proses penyimpanan data
 app.post('/contact', [
+    body('nama').custom((value) => {
+        const duplikat = cekDuplikat(value)
+
+    }),
     check('email', 'Email yang diinput tidak valid!').isEmail(),
     check('nohp', 'No HP yang diinput tidak valid!').isMobilePhone('id-ID')
 ], (req, res) => {

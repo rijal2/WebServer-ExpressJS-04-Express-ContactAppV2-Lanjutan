@@ -146,4 +146,19 @@ Masih menggunakan Express-Validator, adapun fasilitas yang bisa digunakan untuk 
 
 01. Sesuai dengan dokumentasinya. Silahkan require terlebih dahulu check.
 02. Pada app.post(), ganti body dengan check.
-03. Tambahkan parameter yang berisi pesan error yang ingin ditampilkan
+03. Tambahkan parameter yang berisi pesan error yang ingin ditampilkan.
+
+VALIDASI NAMA
+Tidak boleh ada nama yang sama, jadi jika ada data baru dengan nama yang sudah ada pada data sebelumnya maka data tersebut akan ditolak. Caranya silahkan gunakan Custom validators/sanitizers yang sudah disediakan oleh express. Dokumentasi nya silahkan cek disini:
+
+    https://express-validator.github.io/docs/custom-validators-sanitizers.html
+
+01. Sesuai dokumentasi, silahkan tambahkan parameter body().custom((value) => {}) didalam array parameter
+02. isi parameter body dengan atribut yang ada pada elemen tempat user input data nama, yaitu atribut nama.
+03. Pada custom(value), value merujuk pada data nama yang akan dicek statusnya.
+04. Buat skema pengecekan nama double. terlebih dahulu buat function cekDuplikat() di file /utils/contacts.js
+05. 
+
+
+
+
