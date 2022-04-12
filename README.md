@@ -76,10 +76,74 @@ PROSES VALIDASI
 01. Agar kolom isian disetting wajib diisi maka tambahkan atribut "required" pada html tag input.
 02. Untuk validasi email, bisa dengan mengubah value dari atribut 'type' menjadi email. Validasi ini hanya akan mengecek apakah data yang dimasukkan ada karrakter @ atau tidak.
 
-VALIDASI EMAIL
+VALIDASI EMAIL & NOHP
 01. Untuk validasi email tidak cukup dengan mengandalkan validasi bawaan browser. Express sudah memiliki validasi email yang bisa digunakan, yaitu express-validator. Silahkan kunjungi dokumentasi nya di:
 
     https://www.npmjs.com/package/express-validator
 
 02. Install express-validator versi 6.10.1
-PROSES PENYIMPANAN
+03. Jangan lupa untuk melakukan require(). Cara require nya bisa kunjungi
+
+    https://express-validator.github.io/docs/
+
+04. Kemudian gunakan pada app.post()
+05. Matikan dulu dua metode dibawah ini agar data ujicoba yang diinput tidak langsung masuk ke contacts.json :
+        addContact(req.body)
+        res.redirect('/contact')
+
+
+06. Tambahkan parameter body pada metode app.post(). Tambahkan sesuai jumlah kolom yang akan divalidasi. Sementara yang akan divalidasi kali ini adalah email dan nohp. Sehingga metode nya akan nampak seperti di bawah ini:
+
+    app.post('/contact', [
+        body('email').isEmail(),
+        body('nohp').isMobilePhone('id-ID')
+        ], (req, res) => {
+
+    })
+
+    Keterangan:
+    parameter yang ada di dalam body() adalah nilai dari atribute name yang ada di add-contacts.ejs form tambah data. Nilai tersebut harus ditulis persis (baik besar maupun kecilnya huruf), sebab dari elemen yang memiliki nilai atribut tersebut, data yang dinput user ditangkap dan disimpan kedalam req.body
+
+    isEmail() dan isMobilePhone() adalah metode yang disediakan express-validator untuk validasi email dan nohp
+
+07. Kemudian hasil pengecekan akan masuk ke validationResault(). Metode ini digunakan didalam arrow function. Karena data yang diinput oleh user ditangkap oleh body, sedangkan body itu sendiri tersimpan di dalam parameter req, maka untuk mengetahui hasil validasi parameter req harus dicek apakah ada error atau tidak. cara ngeceknya bisa seperti yang ada documentasinya:
+
+    (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({ errors: errors.array() });
+        }
+    })
+
+    Keterangan:
+    Dengan metode res.status(400).json({ errors: errors.array() }) , maka jika terdapat error akan ditampilkan errornya pada browser
+
+08. Selanjutnya lakukan ujicoba dengan memasukkan data yang tidak valid pada form tambah data.
+09. Berikut hasil ujicoba
+
+    errors: [
+                {
+                    value: "email!@kkk",
+                    msg: "Invalid value",
+                    param: "email",
+                    location: "body"
+                },
+                {
+                    value: "asassa",
+                    msg: "Invalid value",
+                    param: "nohp",
+                    location: "body"
+                }
+            ]
+    
+    Keterangan:
+    hasil dari validationResault() nya, akan menampilkan 4 informasi. Pertama, adalah value, informasi ini berisi data yang diinput oleh user. Kedua, msg, yaitu pesan error yang ingin disampaikan. Nilai msg bisa disetting sesuai keinginan, caranya ada pada tahap selanjutnya. Ketiga, param, ini adalah informasi nilai dari atribute name suatu elemen. Sehingga bisa diketahui berasal dari elemen yang manakah data tersebut diinput. Keempat adalah Location, berisi informasi tentng data yang diinput oleh user ditangkap/disimpan.
+
+MEMBUAT CUSTOM ERROR MESSAGE
+Masih menggunakan Express-Validator, adapun fasilitas yang bisa digunakan untuk menyetting pesan error sesua dengan keinginan. Silahkan lihat dokumentasi nya disini
+
+    https://express-validator.github.io/docs/custom-error-messages.html
+
+01. Sesuai dengan dokumentasinya. Silahkan require terlebih dahulu check.
+02. Pada app.post(), ganti body dengan check.
+03. Tambahkan parameter yang berisi pesan error yang ingin ditampilkan

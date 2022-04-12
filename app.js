@@ -2,7 +2,9 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const req = require('express/lib/request');
 const res = require('express/lib/response');
-const { loadContact, findContact, addContact } = require('./utils/contacts')
+const { loadContact, findContact, addContact } = require('./utils/contacts');
+const { body, validationResult, check } = require('express-validator');
+
 const app = express()
 const port = 3000
 
@@ -14,7 +16,7 @@ app.use(expressLayouts);
 app.use(express.static('public'))
 
 //Menggunakan middleware express.urlencoded()
-app.use(express.urlencoded())
+app.use(express.urlencoded( {extended: true} ))
 
 
 //Setting halaman root (home)
@@ -75,9 +77,18 @@ app.get('/contact/add', (req, res) => {
 })
 
 //Proses penyimpanan data
-app.post('/contact', (req, res) => {
-    addContact(req.body)
-    res.redirect('/contact') //Setelah data disimpan maka langsung tampil halaman '/contact'
+app.post('/contact', [
+    check('email', 'Email yang diinput tidak valid!').isEmail(),
+    check('nohp', 'No HP yang diinput tidak valid!').isMobilePhone('id-ID')
+], (req, res) => {
+    const errors = validationResult(req);
+
+    //Lakukan pengecekan errors, apakah ada isinya atau tidak
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array() });
+    }
+    // addContact(req.body)
+    // res.redirect('/contact') //Setelah data disimpan maka langsung tampil halaman '/contact'
 })
 
 //Setting halaman Detail Contact
