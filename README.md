@@ -168,7 +168,7 @@ Tidak boleh ada nama yang sama, jadi jika ada data baru dengan nama yang sudah a
         }
     }),
 
-Selain itu tujuan membuat error baru adalah agar data yang dikirim masuk ke dalama validationResault. Jangan lupa apabila tidak ada duplikat, maka kembalikan dengan return true.
+Selain itu tujuan membuat error baru adalah agar data yang dikirim masuk ke dalam validationResault. Jangan lupa apabila tidak ada duplikat, maka kembalikan dengan return true.
 
     body('nama').custom((value) => {
         const duplikat = cekDuplikat(value)
@@ -177,3 +177,45 @@ Selain itu tujuan membuat error baru adalah agar data yang dikirim masuk ke dala
         }
         return true
     }),
+
+HANDLE ERROR
+Setelah melakukan custom error, maka tampilan error nya bisa dibuat lebih menarik. Jadi bukan menggunakan return res.status(400).json({ errors: errors.array() }); Tapi akan dikembalikan ke halaman add-contact.ejs dengan menampilkan alert error nya.
+
+01. Matikan return res.status(400).json({ errors: errors.array() });
+02. Render kembali halaman add-contact.ejs, dengan menambahkan nilai error pada paramater objeknya. Sehingga rendernya menjadi seperti ini:
+
+        res.render('add-contact', {
+            title: "Form Tambah Data Contact",
+            layout: "layouts/main-layout",
+            errors: errors.array()
+        })
+    
+    Keterangan:
+    Jika ada error pada data yang diinput oleh user, maka nilai error pada parameter objek di atas akan membawa 4 informasi seperti yang sudah dijelaskan sebelumnya, yaitu ada value, msg, param, dan location.
+
+03. Dengan memanfaatkan informasi tersebut maka bisa dibuat tampilan html yang menarik agar user tahu bagian error nya yang mana
+04. Buka kembali file add-contact.ejs
+05. Buat pengkondisian yang akan mengecek isi dari errors, apakah ada error atau tidak. Hati-hati! Gunakan pengkondisian yang tepat.
+
+    Pengkondisian yang tidak tepat.
+    if ( errors ){}
+    Pengkondisian diatas tidak akurat karena ada atau tidak ada isinya, maka errors akan mengembalikan nilai. Jika ada isinya maka errors akan mengembalikan nilai2 yang error, jika tidak ada isinya maka akan mengembalikan undifined. Oleh karena itu perlu hati-hati menggunakan pengkondisian yang parameternya merupakan array.
+
+    Pengkondisian yang tepat adalah dengan mengecek status errornya, apakah undefined atau tidak. Jika errors ada isinya maka statusnya tidak undefined. Jika tidak ada isinya maka statusnya undefined. seperti di bawah ini
+
+    <% if (typeof errors != 'undefined') { %>
+             
+    <% } %>
+
+08. Lakukan sesuatu untuk menampilkan error yang ada. Siapkan template bootstrap berupa alert untuk menampilkan error
+09. Isi template tersbut dengan ul>li, karena jika ada error maka error2 tersebut akan ditampilkan dalam bentuk list. Oleh karena itu bisa dilakukan looping pada elemen li nya. Sehingga akan nampak seperti ini
+
+            <% if (typeof errors != 'undefined') { %>
+              <div class="alert alert-danger" role="alert">
+                <ul>
+                    <% errors.forEach(error => { %>
+                    <li><%= error.msg %> </li>
+                    <% }) %>
+                  </ul> 
+                </div>
+            <% } %>
