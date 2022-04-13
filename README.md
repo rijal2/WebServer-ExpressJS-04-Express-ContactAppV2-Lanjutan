@@ -231,3 +231,7 @@ Jika semua data yang diinput user benar, maka data tersebuy harus disimpan kedal
         addContact(req.body)
         res.redirect('/contact')
     }
+
+
+MEMBUAT FLASH MESSAGE
+Selanjutnya adalah membuat flash message. Dimana pesan error yang tampila akan hilang dalam waktu terttentu
