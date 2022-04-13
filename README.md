@@ -178,6 +178,7 @@ Selain itu tujuan membuat error baru adalah agar data yang dikirim masuk ke dala
         return true
     }),
 
+
 HANDLE ERROR
 Setelah melakukan custom error, maka tampilan error nya bisa dibuat lebih menarik. Jadi bukan menggunakan return res.status(400).json({ errors: errors.array() }); Tapi akan dikembalikan ke halaman add-contact.ejs dengan menampilkan alert error nya.
 
@@ -214,8 +215,19 @@ Setelah melakukan custom error, maka tampilan error nya bisa dibuat lebih menari
               <div class="alert alert-danger" role="alert">
                 <ul>
                     <% errors.forEach(error => { %>
-                    <li><%= error.msg %> </li>
+                        <li><%= error.msg %> </li>
                     <% }) %>
                   </ul> 
                 </div>
             <% } %>
+
+JIKA SEMUA DATA YANG DIINPUT BENAR
+Jika semua data yang diinput user benar, maka data tersebuy harus disimpan kedalam database. Fungsi untuk menyimpan data tersebut sudah pernah dibuat dan tinggal digunakan.
+
+01. Pada app.js, metode app.post() tambahkan else dibawah pengkondisian if.
+02. Isi else tersebut dengan function penyimpanan contact. sehingga kodenya menjadi seperti ini
+
+    else{
+        addContact(req.body)
+        res.redirect('/contact')
+    }
