@@ -242,3 +242,37 @@ Install terlebih dahulu modul yang digunakan untuk bekerja di dalam session dan 
 
 Kemudian install modul yang akan bekerja ada session flash
 03. Install npm i connect-flash@0.1.1
+
+04. lakukan require di app.js
+05. Lakukan Konfigurasi flash
+06. jalankan dengan beberapa langkah berikut
+
+Menjalankan Proses Flash
+01. Set di dalam app.post(), set dengan menambahkan metode res.flash() sebelum halaman menampilkan data baru. Tepatnya sebelum res.redirect()
+
+    req.flash('pesan', 'Data Contact berhasil ditambahkan')
+
+    Ket:
+    pada metode res.flash() terdapat dua parameter. Parameter pertama adalah nama variable, dan yang kedua adalah isi dari variabel tersebut.
+
+02. Set di dalam metode yang merender halaman contact, yaitu app.get('contact', )
+03. Didalam metode tersebut ada metode res.render(), tambahkan variabel 'msg' (namanya bebas, tidak harus msg) didalam parameter objectnya. Dimana variabel tersebut akan berisi data pesan (message yang dikirim oleh app.post()). sehingga code nya akan menjadi seperti dibawah ini:
+
+    res.render('contact', {
+        title: "Halaman Contact",
+        layout: "layouts/main-layout",
+        contacts,
+        msg: req.flash('pesan')
+    })
+
+04. setting di halaman contact.ejs, karena halamn ini lah yang nantinya akan menampilkan message nya.
+05. Lakukan pengkondisian pada variable 'msg', apakah kosong atau ada isinya, seperti berikut ini:
+
+    <% if (msg.length !== 0) { %>
+        <div class="alert alert-success mt-3" role="alert">
+        <%= msg %> 
+        </div>
+    <% } %>
+
+
+

@@ -3,6 +3,14 @@
         <div class="col-md-8">
             <h2>DAFTAR CONTACT</h2>
             <a href="/contact/add" class="btn btn-success">Tambah Data</a>
+
+            <!-- Setting flash massage -->
+            <% if (msg.length !== 0) { %>
+              <div class="alert alert-success mt-3" role="alert">
+                <%= msg %> 
+              </div>
+            <% } %>
+
             <table class="table">
                 <thead>
                   <tr>

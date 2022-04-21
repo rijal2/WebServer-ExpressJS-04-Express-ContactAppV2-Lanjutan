@@ -4,6 +4,9 @@ const req = require('express/lib/request');
 const res = require('express/lib/response');
 const { loadContact, findContact, addContact, cekDuplikat } = require('./utils/contacts');
 const { body, validationResult, check } = require('express-validator');
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
+const flash = require('connect-flash')
 
 const app = express()
 const port = 3000
@@ -17,6 +20,16 @@ app.use(express.static('public'))
 
 //Menggunakan middleware express.urlencoded()
 app.use(express.urlencoded( {extended: true} ))
+
+//Konfigurasi Flash
+app.use(cookieParser('secret'));
+app.use(session({
+    cookie: { maxAge: 6000},
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash())
 
 
 //Setting halaman root (home)
@@ -65,6 +78,7 @@ app.get('/contact', (req, res) => {
         title: "Halaman Contact",
         layout: "layouts/main-layout",
         contacts,
+        msg: req.flash('pesan')
     })
 })
 
@@ -100,7 +114,8 @@ app.post('/contact', [
         })
     
     } else{
-        addContact(req.body)
+        addContact(req.body);
+        req.flash('pesan', 'Data contact berhasil ditambahkan') // Setting flash massage
         res.redirect('/contact') //Setelah data disimpan maka langsung tampil halaman '/contact'
     }
 })
