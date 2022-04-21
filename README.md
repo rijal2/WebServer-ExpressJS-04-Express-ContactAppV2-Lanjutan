@@ -234,4 +234,11 @@ Jika semua data yang diinput user benar, maka data tersebuy harus disimpan kedal
 
 
 MEMBUAT FLASH MESSAGE
-Selanjutnya adalah membuat flash message. Dimana pesan error yang tampila akan hilang dalam waktu terttentu
+Selanjutnya adalah membuat flash message. Dimana pesan error yang tampilan akan hilang dalam waktu terttentu, tepatnya setelah browser di refresh.
+
+Install terlebih dahulu modul yang digunakan untuk bekerja di dalam session dan cookie
+01. Install Express-session@1.17.2
+02. Install cookie-parser@1.4.5
+
+Kemudian install modul yang akan bekerja ada session flash
+03. Install npm i connect-flash@0.1.1
